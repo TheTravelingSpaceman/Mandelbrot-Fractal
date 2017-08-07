@@ -41,6 +41,9 @@ public class main{
    }
 
    public static boolean isMandle(int x, int y){
-      return y>(x*x);
+      ComplexNumber seed = new ComplexNumber(x,y);
+      ComplexNumber i = ComplexNumber.func(seed, new ComplexNumber(0,0));
+      for (int j = 0; j<10; j++) i = ComplexNumber.func(seed,i);
+      return i.getAbsolute()<=2;
    }
 }
