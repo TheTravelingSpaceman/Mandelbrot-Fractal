@@ -9,12 +9,13 @@ public class main{
       //Setup Jframe
       JFrame frame = new JFrame("JFrame Example");
       frame.setLocationRelativeTo(null);
+      frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setSize(500, 500);
       frame.setVisible(true);
 
       //Display Image
-      BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+      BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
       JPanel pane = new JPanel() {
          @Override
          protected void paintComponent(Graphics g) {
@@ -22,18 +23,24 @@ public class main{
              g.drawImage(img, 0, 0, null);
          }
       };
-      pane.setSize(200, 200);
+      pane.setSize(1920, 1080);
       frame.add(pane);
 
       //Draw Image
+      int px, py;
       for (int x = 0; x < img.getWidth(); x++) {
          for (int y = 0; y < img.getHeight(); y++) {
-            try {
-               Thread.sleep(10);
-            }catch(InterruptedException e) {e.printStackTrace();}
-            img.setRGB(x, y, Color.RED.getRGB());
-            pane.repaint();
+            px = x-960;
+            py = 540-y;
+            if (isMandle(px, py)){
+               img.setRGB(x, y, Color.RED.getRGB());
+               pane.repaint();
+            }
          }
       }
+   }
+
+   public static boolean isMandle(int x, int y){
+      return y>(x*x);
    }
 }
