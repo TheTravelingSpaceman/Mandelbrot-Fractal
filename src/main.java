@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.image.*;
+import javax.imageio.*;
+import java.io.*;
 
 public class main{
    public static void main(String[] args){
@@ -15,7 +18,7 @@ public class main{
       frame.setVisible(true);
 
       //Display Image
-      BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
+      BufferedImage img = new BufferedImage(1920*4, 1080*4, BufferedImage.TYPE_INT_RGB);
       JPanel pane = new JPanel() {
          @Override
          protected void paintComponent(Graphics g) {
@@ -28,22 +31,35 @@ public class main{
 
       //Draw Image
       int px, py;
+      int colour;
       for (int x = 0; x < img.getWidth(); x++) {
          for (int y = 0; y < img.getHeight(); y++) {
             px = x-960;
             py = 540-y;
-            if (isMandle(px, py)){
-               img.setRGB(x, y, Color.RED.getRGB());
-               pane.repaint();
-            }
+            colour = isMandle(px, py);
+            // System.out.println(colour);
+            img.setRGB(x, y, colour);
+            pane.repaint();
          }
       }
+
+      //Save image
+      try {
+         File outputfile = new File("saved.png");
+         ImageIO.write(img, "png", outputfile);
+      } catch (IOException e) {}
    }
 
-   public static boolean isMandle(int x, int y){
-      ComplexNumber seed = new ComplexNumber(x/300.0,y/300.0);
+   public static int isMandle(int x, int y){
+      ComplexNumber seed = new ComplexNumber(x/800000.0-0.79,y/800000.0-0.16);
       ComplexNumber i = ComplexNumber.func(seed, new ComplexNumber(0,0));
-      for (int j = 0; j<1000; j++) i = ComplexNumber.func(seed,i);
-      return i.getAbsolute()<=2;
+
+      int j = 0;
+      while (i.getAbsolute() < 2){
+         i = ComplexNumber.func(seed,i);
+         j++;
+         if (j>100000) break;
+      }
+      return j;
    }
 }
