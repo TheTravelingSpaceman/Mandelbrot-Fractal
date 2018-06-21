@@ -6,6 +6,7 @@ Just some rough java code that draws sections of the [Mandelbrot Set] at differe
 
 Example Image
 -------------
+![Why do I need text here?](https://github.com/WalterSmuts/Mandelbrot-Fractal/blob/master/example.png "Example Mandelbrot Render")
 
 Build/Run Instructions
 ----------------------
@@ -13,14 +14,14 @@ Build/Run Instructions
 # Download Repo
 git clone https://github.com/WalterSmuts/Mandelbrot-Fractal.git
 # Change to Cloned directory
-cd Manelbrot-Fractal
+cd Mandelbrot-Fractal
 # Run make
 make
-# Run the game
-./TopologyWars
 # Change to bin directory
+cd bin
+# Run main
 java main
 ```
 
-[Madelbrot Set]: https://en.wikipedia.org/wiki/Mandelbrot_set
+[Mandelbrot Set]: https://en.wikipedia.org/wiki/Mandelbrot_set
 [ffmpeg]: https://www.ffmpeg.org/
